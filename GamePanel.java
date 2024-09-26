@@ -21,9 +21,9 @@ public class GamePanel extends JPanel { // toile dans laquelle tout sera dessin√
 
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.setColor(Color.WHITE);
-    g.fillRect(0, 0, displaySize.getWidth(), displaySize.getHeight());
     g.setColor(Color.BLACK);
+    g.fillRect(0, 0, displaySize.getWidth(), displaySize.getHeight());
+    g.setColor(Color.WHITE);
     Entity.getEntities().forEach(entity -> entity.render((Graphics2D) g)); // appelle la fonction "render" de chaque entit√©
     g.dispose();
   }

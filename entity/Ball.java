@@ -9,7 +9,7 @@ import util.Spot;
 public class Ball extends Entity {
 
   private double angle = Math.toRadians(-100);
-  private int velocity = 8;
+  private int velocity = 12;
   private double spin;
 
   private ArrayList<Spot> clones = new ArrayList<>();
@@ -57,9 +57,9 @@ public class Ball extends Entity {
     g2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
     
     for (int i = 0; i < clones.size() - 1; i++) {
-      int nbInterpolation = 3; // number of additionnal clones to be drawn between known spots
+      int nbInterpolation = 2; // number of additionnal clones to be drawn between known spots
       for (int j = 0; j < nbInterpolation; j++) {
-        double cloneSize = 20;
+        double cloneSize = 24;
         double xCloneGap = (clones.get(i + 1).getX() - clones.get(i).getX()) / nbInterpolation;
         double yCloneGap = (clones.get(i + 1).getY() - clones.get(i).getY()) / nbInterpolation;
         g2D.setColor(new Color(255, 100, 100, i * (255 / clones.size()) / nbInterpolation));
@@ -72,7 +72,7 @@ public class Ball extends Entity {
       }
     }
 
-    g2D.setColor(Color.BLACK);
+    g2D.setColor(Color.WHITE);
     g2D.fillOval(spot.getX(), spot.getY(), size.getWidth(), size.getHeight());
 
   }
@@ -88,7 +88,7 @@ public class Ball extends Entity {
   private void brickCollision() {
     for (Brick brick : Brick.getBricks()) {
 
-      if (Math.sqrt(Math.pow(brick.getSpot().getX() + 60 - spot.getX(), 2) + Math.pow(brick.getSpot().getY() + 30 - spot.getY(), 2)) > 100) {
+      if (Math.sqrt(Math.pow(brick.getSpot().getX() + 60 - spot.getX(), 2) + Math.pow(brick.getSpot().getY() + 30 - spot.getY(), 2)) > 200) {
         continue;
       }
 

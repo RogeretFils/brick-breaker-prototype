@@ -21,7 +21,7 @@ public class Brick extends Entity {
 
   public void render(Graphics2D graphics2d) {
     if (!visible) return;
-    graphics2d.setPaint(Color.BLACK);
+    graphics2d.setPaint(Color.WHITE);
     graphics2d.fillRect(spot.getX(), spot.getY(), size.getWidth(), size.getHeight());
   }
 

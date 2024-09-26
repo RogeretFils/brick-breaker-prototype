@@ -9,14 +9,14 @@ import util.Spot;
 public class PlayerBar extends Entity { // barre controllée par le joueur
 
   private KeyHandler keyHandler;
-  private int velocity = 8; // en pixel par frame
+  private int velocity = 12; // en pixel par frame
   private int movementDirection; // -1 = gauche, 0 = immobile, 1 = droite
 
   public PlayerBar(KeyHandler keyHandler) {
     super();
     this.keyHandler = keyHandler;
     size.setSize(300, 30);
-    spot.setSpot((displaySize.getWidth() - size.getWidth()) / 2, (int) (displaySize.getHeight() * 0.85));
+    spot.setSpot((displaySize.getWidth() - size.getWidth()) / 2, (int) (displaySize.getHeight() - size.getHeight() - 18));
   }
 
   public void update() {
