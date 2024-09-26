@@ -41,4 +41,19 @@ public class Brick extends Entity {
   public Size getSize() {
     return size;
   }
+
+  public static void clearBricks() {
+    bricks = new ArrayList<>();
+  }
+
+  public static void createGrid(int width, int height, int gridGap) {
+
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        Size brickSize = new Size((displaySize.getWidth() - gridGap * (width + 1)) / width, (int) ((displaySize.getWidth() - gridGap * (height + 1)) / width * 0.65));
+        Spot brickSpot = new Spot(gridGap + (brickSize.getWidth() + gridGap) * i, gridGap + (brickSize.getHeight() + gridGap) * j);
+        new Brick(brickSpot, brickSize);
+      }
+    }
+  }
 }

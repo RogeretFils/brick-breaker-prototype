@@ -1,3 +1,6 @@
+import Game.Game;
+import Game.GameLoop;
+
 public class Launcher { // point d'entrée du programmez
 
   public static void main(String[] args) {

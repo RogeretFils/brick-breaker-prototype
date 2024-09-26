@@ -2,9 +2,11 @@ package entity;
 
 import java.awt.Graphics2D;
 
+import Game.Game;
 import input.KeyHandler;
 import util.Size;
 import util.Spot;
+
 
 public class PlayerBar extends Entity { // barre controllée par le joueur
 
@@ -15,7 +17,7 @@ public class PlayerBar extends Entity { // barre controllée par le joueur
   public PlayerBar(KeyHandler keyHandler) {
     super();
     this.keyHandler = keyHandler;
-    size.setSize(300, 30);
+    size.setSize(350, 30);
     spot.setSpot((displaySize.getWidth() - size.getWidth()) / 2, (int) (displaySize.getHeight() - size.getHeight() - 18));
   }
 

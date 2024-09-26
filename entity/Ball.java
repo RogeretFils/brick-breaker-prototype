@@ -8,7 +8,7 @@ import util.Spot;
 
 public class Ball extends Entity {
 
-  private double angle = Math.toRadians(-100);
+  private double angle = Math.toRadians(90);
   private int velocity = 12;
   private double spin;
 

@@ -1,3 +1,4 @@
+package Game;
 public class GameLoop implements Runnable { // boucle de jeu
 
   private Game game;

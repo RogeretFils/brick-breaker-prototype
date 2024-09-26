@@ -35,6 +35,11 @@ public abstract class Entity { // classe parent à tous les objects visuels
     return entities;
   }
 
+  public static void clearEntities() {
+    entities = new ArrayList<>();
+    Brick.clearBricks();
+  }
+
   public static void setDisplaySize(Size size) {
     displaySize = size;
   }

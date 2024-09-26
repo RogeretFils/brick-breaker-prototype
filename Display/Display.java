@@ -1,3 +1,4 @@
+package Display;
 import javax.swing.JFrame;
 
 public class Display extends JFrame { // fenêtre du jeu (cadre du tableau)

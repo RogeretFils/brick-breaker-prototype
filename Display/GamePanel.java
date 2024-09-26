@@ -1,3 +1,4 @@
+package Display;
 import javax.swing.JPanel;
 
 import entity.Entity;
