@@ -1,11 +1,8 @@
 package entity;
 
 import java.util.ArrayList;
-import java.awt.image.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import javax.swing.*;
+import java.awt.image.BufferedImage;
 
 import util.Size;
 import util.Spot;
@@ -13,8 +10,8 @@ import util.Spot;
 public class Ball extends Entity {
 
   private ArrayList<Entity> entities;
-  private double angle = Math.toRadians(-50);
-  private int velocity = 16;
+  private double angle = Math.toRadians(-90);
+  private int velocity = 10;
   private double spin;
 
   private ArrayList<Spot> clones = new ArrayList<>();
@@ -63,46 +60,30 @@ public class Ball extends Entity {
         && spot.getY() <= playerBar.getSpot().getY() - size.getHeight() + velocity;
   }
 
-  public void render(Graphics2D graphics2d) {
+  public void render(Graphics2D g2D) {
 
-    // g2dTrail.fillOval(100, 200, 50, 50);
-
-    for (int i = 0; i < clones.size() - 3; i++) {
-      // graphics2d.setColor(new Color(100, 100, 255, i * 6));
-      // // graphics2d.fillOval(clones.get(i).getX(), clones.get(i).getY(),
-      // // size.getWidth() / 2, size.getHeight() / 2);
-      // graphics2d.setStroke(new BasicStroke(i / 2));
-      // graphics2d.drawLine(clones.get(i).getX(), clones.get(i).getY(), clones.get(i
-      // + 1).getX(),
-      // clones.get(i + 1).getY());
-
-      // int width = 400, height = 300;
-      // BufferedImage bufferedImage = new BufferedImage(width, height,
-      // BufferedImage.TYPE_INT_ARGB);
-      // Graphics2D g2d = bufferedImage.createGraphics();
-      // g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-      // RenderingHints.VALUE_ANTIALIAS_ON);
-      // g2d.setColor(Color.RED);
-      // g2d.fillRect(100, 75, 200, 200); // Draw a filled square
-      // g2d.dispose();
-
-      // float[] blurKernel = {
-      // 1 / 9f, 1 / 9f, 1 / 9f,
-      // 1 / 9f, 1 / 9f, 1 / 9f,
-      // 1 / 9f, 1 / 9f, 1 / 9f
-      // };
-
-      // // // Apply the blur using ConvolveOp
-      // ConvolveOp blur = new ConvolveOp(new Kernel(3, 3, blurKernel),
-      // ConvolveOp.EDGE_NO_OP, null);
-      // BufferedImage blurredImage = blur.filter(bufferedImage, null);
-
-      // // Draw the blurred image on the panel
-      // graphics2d.drawImage(bufferedImage, 0, 0, null);
-
+    g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+    
+    for (int i = 0; i < clones.size() - 1; i++) {
+      int nbInterpolation = 3; // number of additionnal clones to be drawn between known spots
+      for (int j = 0; j < nbInterpolation; j++) {
+        double cloneSize = 20;
+        double xCloneGap = (clones.get(i + 1).getX() - clones.get(i).getX()) / nbInterpolation;
+        double yCloneGap = (clones.get(i + 1).getY() - clones.get(i).getY()) / nbInterpolation;
+        g2D.setColor(new Color(255, 100, 100, i * (255 / clones.size()) / nbInterpolation));
+        g2D.fillOval(
+          (int) (clones.get(i).getX() + xCloneGap * j - cloneSize / 2),
+          (int) (clones.get(i).getY() + yCloneGap * j - cloneSize / 2),
+          (int) cloneSize,
+          (int) cloneSize
+        );
+      }
     }
-    // graphics2d.setStroke(new BasicStroke(1));
-    // graphics2d.setColor(Color.BLACK);
-    graphics2d.fillOval(spot.getX(), spot.getY(), size.getWidth(), size.getHeight());
+
+    g2D.setColor(Color.BLACK);
+    g2D.fillOval(spot.getX(), spot.getY(), size.getWidth(), size.getHeight());
+    g2D.dispose();
+
   }
 }
