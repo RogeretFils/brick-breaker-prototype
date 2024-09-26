@@ -2,23 +2,20 @@ package entity;
 
 import java.util.ArrayList;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import util.Size;
 import util.Spot;
 
 public class Ball extends Entity {
 
-  private ArrayList<Entity> entities;
-  private double angle = Math.toRadians(-90);
-  private int velocity = 10;
+  private double angle = Math.toRadians(-100);
+  private int velocity = 8;
   private double spin;
 
   private ArrayList<Spot> clones = new ArrayList<>();
 
-  public Ball(Spot spot, Size size, ArrayList<Entity> entities) {
+  public Ball(Spot spot, Size size) {
     super(spot, size);
-    this.entities = entities;
   }
 
   public void update() {
@@ -50,14 +47,8 @@ public class Ball extends Entity {
       PlayerBar playerBar = (PlayerBar) entities.get(0);
       spin -= 200 * playerBar.getMovementDirection();
     }
-  }
 
-  public boolean horizontalCollision() {
-    PlayerBar playerBar = (PlayerBar) entities.get(0);
-    return spot.getX() >= playerBar.getSpot().getX()
-        && spot.getX() <= playerBar.getSpot().getX() + playerBar.getSize().getWidth()
-        && spot.getY() >= playerBar.getSpot().getY() - size.getHeight()
-        && spot.getY() <= playerBar.getSpot().getY() - size.getHeight() + velocity;
+    brickCollision();
   }
 
   public void render(Graphics2D g2D) {
@@ -83,7 +74,68 @@ public class Ball extends Entity {
 
     g2D.setColor(Color.BLACK);
     g2D.fillOval(spot.getX(), spot.getY(), size.getWidth(), size.getHeight());
-    g2D.dispose();
 
+  }
+
+  private boolean horizontalCollision() {
+    PlayerBar playerBar = (PlayerBar) entities.get(0);
+    return spot.getX() >= playerBar.getSpot().getX()
+        && spot.getX() <= playerBar.getSpot().getX() + playerBar.getSize().getWidth()
+        && spot.getY() >= playerBar.getSpot().getY() - size.getHeight()
+        && spot.getY() <= playerBar.getSpot().getY() - size.getHeight() + velocity;
+  }
+
+  private void brickCollision() {
+    for (Brick brick : Brick.getBricks()) {
+
+      if (Math.sqrt(Math.pow(brick.getSpot().getX() + 60 - spot.getX(), 2) + Math.pow(brick.getSpot().getY() + 30 - spot.getY(), 2)) > 100) {
+        continue;
+      }
+
+      if ( // collision avec le bas d'une brique
+        spot.getX() >= brick.getSpot().getX() - size.getWidth() * 0.5 &&
+        spot.getX() <= brick.getSpot().getX() + brick.getSize().getWidth() - size.getWidth() * 0.5 &&
+        spot.getY() <= brick.getSpot().getY() + brick.getSize().getHeight() &&
+        spot.getY() >= brick.getSpot().getY() + brick.getSize().getHeight() - velocity
+      ) {
+        angle = -angle;
+        Brick.destroyBrick(brick);
+        break;
+      }
+
+      if ( // collision avec le haut d'une brique
+        spot.getX() >= brick.getSpot().getX() - size.getWidth() * 0.5 &&
+        spot.getX() <= brick.getSpot().getX() + brick.getSize().getWidth() - size.getWidth() * 0.5 &&
+        spot.getY() >= brick.getSpot().getY() - size.getHeight() &&
+        spot.getY() <= brick.getSpot().getY() - size.getHeight() + velocity
+      ) {
+        angle = -angle;
+        Brick.destroyBrick(brick);
+        break;
+      }
+
+      if ( // collision avec la gauche d'une brique
+        spot.getX() >= brick.getSpot().getX() - size.getWidth() &&
+        spot.getX() <= brick.getSpot().getX() - size.getWidth() + velocity &&
+        spot.getY() <= brick.getSpot().getY() + brick.getSize().getHeight() - size.getHeight() * 0.5 &&
+        spot.getY() >= brick.getSpot().getY() - size.getHeight() - size.getHeight() * 0.5
+      ) {
+        angle = Math.PI - angle;
+        Brick.destroyBrick(brick);
+        break;
+      }
+
+      if ( // collision avec la droite d'une brique
+        spot.getX() <= brick.getSpot().getX() + brick.getSize().getWidth() &&
+        spot.getX() >= brick.getSpot().getX() + brick.getSize().getWidth() - velocity &&
+        spot.getY() <= brick.getSpot().getY() + brick.getSize().getHeight() - size.getHeight() * 0.5 &&
+        spot.getY() >= brick.getSpot().getY() - size.getHeight() - size.getHeight() * 0.5
+      ) {
+        angle = Math.PI - angle;
+        Brick.destroyBrick(brick);
+        break;
+      }
+
+    }
   }
 }

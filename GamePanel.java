@@ -1,16 +1,17 @@
 import javax.swing.JPanel;
+
+import entity.Entity;
+
 import java.awt.*;
 import input.KeyHandler;
 import util.Size;
 
 public class GamePanel extends JPanel { // toile dans laquelle tout sera dessiné (toile du tableau)
 
-  private Game game;
   private KeyHandler keyHandler;
   private Size displaySize;
 
-  public GamePanel(Game game, Size displaySize) {
-    this.game = game;
+  public GamePanel(Size displaySize) {
     this.displaySize = displaySize;
     setPreferredSize(new Dimension(displaySize.getWidth(), displaySize.getHeight()));
     setFocusable(true);
@@ -23,7 +24,7 @@ public class GamePanel extends JPanel { // toile dans laquelle tout sera dessin�
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, displaySize.getWidth(), displaySize.getHeight());
     g.setColor(Color.BLACK);
-    game.getEntities().forEach(entity -> entity.render((Graphics2D) g));
+    Entity.getEntities().forEach(entity -> entity.render((Graphics2D) g)); // appelle la fonction "render" de chaque entité
     g.dispose();
   }
 
